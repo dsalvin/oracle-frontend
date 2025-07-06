@@ -7,6 +7,7 @@ import FileUpload from '../components/FileUpload';
 import ForecastGenerator from '../components/ForecastGenerator';
 import WelcomeIllustration from '../components/WelcomeIllustration';
 import HistoricalAnalysis from '../components/HistoricalAnalysis'; // Import the new component
+import { Link as RouterLink } from 'react-router-dom';
 
 const Dashboard = () => {
     const { logout } = useAuth();
@@ -34,9 +35,11 @@ const Dashboard = () => {
         }}>
             <Container maxWidth="xl">
                 <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 4 }}>
-                    <Typography variant="h4" component="h1" sx={{fontWeight: 700}}>
-                        Dashboard
-                    </Typography>
+                    <RouterLink to="/dashboard" style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <Typography variant="h4" component="h1" sx={{fontWeight: 700}}>
+                            Dashboard
+                        </Typography>
+                    </RouterLink>
                     <Button variant="outlined" onClick={handleLogout}>Logout</Button>
                 </Stack>
 

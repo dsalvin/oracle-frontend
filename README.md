@@ -1,12 +1,52 @@
-# React + Vite
+# 📊 Project: Oracle (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend for Project Oracle, a modern dashboard designed to visualize sales data and AI-powered forecasts. It's built with React (using Vite) and features a sleek, dark-mode UI designed with MUI.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### ✨ Core Features
 
-## Expanding the ESLint configuration
+-   **Modern UI/UX**: A responsive, dark-themed dashboard with a focus on clean design and data visualization.
+-   **User Authentication**: Professional login/registration pages with email/password and Google Sign-In options.
+-   **Interactive Charts**: Uses Recharts to display historical trends and future forecasts with confidence intervals.
+-   **File Management**: A user-friendly interface for uploading CSV data.
+-   **Actionable Insights**: Clearly displays AI-generated text summaries alongside charts.
+-   **Data Export**: Allows users to download their forecast data as a CSV.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+### 🛠️ Tech Stack
+
+-   **Framework**: React (Vite)
+-   **UI Library**: Material-UI (MUI)
+-   **Charting**: Recharts
+-   **Routing**: React Router
+-   **Icons**: Lucide React
+-   **API Communication**: Axios
+
+---
+
+### 🚀 Local Setup & Installation
+
+1.  **Clone the repository:**
+    ```bash
+    git clone <your-repo-url>
+    cd oracle-frontend
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+
+3.  **Configure Environment Variables:**
+    Create a `.env.local` file in the root directory. This tells the frontend where to find the backend API.
+    ```env
+    VITE_API_BASE_URL=http://localhost:8000
+    ```
+
+4.  **Run the development server:**
+    ```bash
+    npm run dev
+    ```
+    The application will be available at `http://localhost:5173`.

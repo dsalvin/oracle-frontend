@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { TextField, Button, Box, Alert, Link, Grid } from '@mui/material';
 import AuthLayout from '../layouts/AuthLayout';
+import apiClient from '../api';
 
 const RegisterPage = () => {
     const [formData, setFormData] = useState({
@@ -21,22 +22,24 @@ const RegisterPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+        if (formData.password !== formData.confirmPassword) {
+            setError('Passwords do not match.');
+            return;
+        }
         try {
-            const response = await fetch('http://localhost:8000/register', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    email: formData.email, 
-                    password: formData.password,
-                    first_name: formData.firstName,
-                    last_name: formData.lastName
-                }),
+            // Use apiClient instead of fetch
+            const response = await apiClient.post('/api/register', { 
+                email: formData.email, 
+                password: formData.password,
+                first_name: formData.firstName,
+                last_name: formData.lastName
             });
-            const data = await response.json(); // fetch still needs .json()
-            if (!response.ok) throw new Error(data.detail || 'Registration failed');
+
+            // With Axios, a non-2xx response automatically throws an error
             navigate('/login');
         } catch (err) {
-            setError(err.message);
+            const message = err.response?.data?.detail || err.message;
+            setError(message);
         }
     };
 

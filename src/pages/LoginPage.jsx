@@ -6,6 +6,7 @@ import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import AuthLayout from '../layouts/AuthLayout';
 import GoogleLoginButton from '../components/GoogleLoginButton';
 import { Divider } from '@mui/material';
+import apiClient from '../api';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
@@ -31,17 +32,21 @@ const LoginPage = () => {
         setError('');
         setInfo('');
         try {
-            const response = await fetch('http://localhost:8000/token', {
-                method: 'POST',
+            // The /token endpoint expects form data, not JSON
+            const formData = new URLSearchParams();
+            formData.append('username', email);
+            formData.append('password', password);
+
+            // Use apiClient instead of fetch
+            const response = await apiClient.post('/api/token', formData, {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams({ 'username': email, 'password': password }),
             });
-            const data = await response.json(); // fetch still needs .json()
-            if (!response.ok) throw new Error(data.detail || 'Login failed');
-            saveToken(data.access_token);
+
+            saveToken(response.data.access_token);
             navigate('/dashboard');
         } catch (err) {
-            setError(err.message);
+            const message = err.response?.data?.detail || err.message;
+            setError(message);
         }
     };
 

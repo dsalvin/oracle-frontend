@@ -1,30 +1,34 @@
-import React, { useEffect } from 'react'; // Add useEffect here
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth, AuthProvider } from './context/AuthContext';
 import { setupInterceptors } from './api';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import theme from './theme';
-import AuthCallbackPage from './pages/AuthCallbackPage';
 
 import ProtectedRoute from './components/ProtectedRoute';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import Dashboard from './pages/Dashboard';
+import AuthCallbackPage from './pages/AuthCallbackPage';
 
+// This component handles the main routing logic
 const AppRoutes = () => {
     const auth = useAuth();
     
-    // This useEffect hook was causing the error because it wasn't imported
     useEffect(() => {
         setupInterceptors(auth);
     }, [auth]);
 
     return (
         <Routes>
-            <Route path="/" element={!auth.token ? <LandingPage /> : <Navigate to="/dashboard" />} />
-            <Route path="/login" element={!auth.token ? <LoginPage /> : <Navigate to="/dashboard" />} />
-            <Route path="/register" element={!auth.token ? <RegisterPage /> : <Navigate to="/dashboard" />} />
+            {/* Public Routes */}
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/auth/callback" element={<AuthCallbackPage />} />
+
+            {/* Protected Route */}
             <Route 
               path="/dashboard" 
               element={
@@ -33,7 +37,8 @@ const AppRoutes = () => {
                 </ProtectedRoute>
               } 
             />
-            <Route path="/auth/callback" element={<AuthCallbackPage />} />
+            
+            {/* Catch-all for any other path */}
             <Route path="*" element={<Navigate to="/" />} />
         </Routes>
     )
